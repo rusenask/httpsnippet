@@ -6,6 +6,7 @@
   "homepage": "https://github.com/Mashape/httpsnippet",
   "license": "MIT",
   "main": "src/index.js",
+  "browser": "./browser.js",
   "bin": "bin/httpsnippet",
   "keywords": [
     "api",
@@ -51,7 +52,9 @@
     "test": "mocha --no-timeouts",
     "posttest": "npm run coverage",
     "coverage": "istanbul cover --dir coverage _mocha -- --fgrep 'Request Validation' --invert -R dot",
-    "codeclimate": "codeclimate < coverage/lcov.info"
+    "codeclimate": "codeclimate < coverage/lcov.info",
+    "build-browser-dev": "webpack",
+    "build-browser-prod": "webpack -p"
   },
   "standard": {
     "ignore": [
@@ -82,6 +85,8 @@
     "fs-readfile-promise": "^2.0.1",
     "fs-writefile-promise": "^1.0.3",
     "har-validator": "^2.0.2",
-    "pinkie-promise": "^2.0.0"
+    "json-loader": "^0.5.4",
+    "pinkie-promise": "^2.0.0",
+    "webpack": "^1.13.1"
   }
 }
