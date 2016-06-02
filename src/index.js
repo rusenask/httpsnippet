@@ -1,8 +1,6 @@
 'use strict'
 
 var debug = require('debug')('httpsnippet')
-var es = require('event-stream')
-var MultiPartForm = require('form-data')
 var qs = require('querystring')
 var reducer = require('./helpers/reducer')
 var targets = require('./targets')
@@ -103,24 +101,17 @@ HTTPSnippet.prototype.prepare = function (request) {
       request.postData.mimeType = 'multipart/form-data'
 
       if (request.postData.params) {
-        var form = new MultiPartForm()
+        var form = new FormData()
 
         // easter egg
         form._boundary = '---011000010111000001101001'
 
         request.postData.params.forEach(function (param) {
-          form.append(param.name, param.value || '', {
-            filename: param.fileName || null,
-            contentType: param.contentType || null
-          })
+          form.append(param.name, param.value || '')
         })
 
-        form.pipe(es.map(function (data, cb) {
-          request.postData.text += data
-        }))
-
-        request.postData.boundary = form.getBoundary()
-        request.headersObj['content-type'] = 'multipart/form-data; boundary=' + form.getBoundary()
+        request.postData.boundary = form._boundary
+        request.headersObj['content-type'] = 'multipart/form-data; boundary=' + form._boundary
       }
       break
 
