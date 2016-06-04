@@ -89,6 +89,7 @@
     "har-validator": "^2.0.2",
     "json-loader": "^0.5.4",
     "pinkie-promise": "^2.0.0",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-replace": "^1.0.0"
   }
 }

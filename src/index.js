@@ -109,18 +109,29 @@ HTTPSnippet.prototype.prepare = function (request) {
         form._boundary = '---011000010111000001101001'
 
         request.postData.params.forEach(function (param) {
-          form.append(param.name, param.value || '', {
-            filename: param.fileName || null,
-            contentType: param.contentType || null
-          })
+          // Handle differences between executing this script in a browser
+          // or with Node.js.
+          try {
+            form.append(param.name, param.value || '', {
+              filename: param.fileName || null,
+              contentType: param.contentType || null
+            })
+          } catch (e) {
+            if (e instanceof TypeError) {
+              form.append(param.name, param.value || '')
+            }
+          }
         })
 
-        form.pipe(es.map(function (data, cb) {
-          request.postData.text += data
-        }))
+        // This function and object do not exists in browsers.
+        if (typeof form.pipe == 'function' && typeof es == 'object') {
+          form.pipe(es.map(function (data, cb) {
+            request.postData.text += data
+          }))
+        }
 
-        request.postData.boundary = form.getBoundary()
-        request.headersObj['content-type'] = 'multipart/form-data; boundary=' + form.getBoundary()
+        request.postData.boundary = form._boundary
+        request.headersObj['content-type'] = 'multipart/form-data; boundary=' + form._boundary
       }
       break
 

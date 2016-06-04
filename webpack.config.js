@@ -6,10 +6,26 @@ module.exports = {
     library: 'HTTPSnippet'
   },
   module: {
-    loaders: [{
-      test: /\.json$/,
-      loader: 'json-loader'
-    }
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'webpack-replace',
+        query: {
+          replace: [
+            {
+              from: 'MultiPartForm',
+              to: 'FormData'
+            }, {
+              from: "var es = require('event-stream')",
+              to: ''
+            }
+          ]
+        }
+      }
     ]
   }
 };
