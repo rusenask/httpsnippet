@@ -1,8 +1,12 @@
+var path = require('path');
+var webpack = require('webpack');
+var UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+
 module.exports = {
   entry: './browser.js',
   output: {
-    path: './bin',
-    filename: 'httpsnippet.browser.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'httpsnippet.browser.ie11.min.js',
     library: 'HTTPSnippet'
   },
   module: {
@@ -32,5 +36,13 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new UnminifiedWebpackPlugin()
+  ]
 };

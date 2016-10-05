@@ -53,8 +53,7 @@
     "posttest": "npm run coverage",
     "coverage": "istanbul cover --dir coverage _mocha -- --fgrep 'Request Validation' --invert -R dot",
     "codeclimate": "codeclimate < coverage/lcov.info",
-    "build-browser-dev": "webpack",
-    "build-browser-prod": "webpack -p"
+    "build-browser": "webpack && webpack --config webpack.config.ie11.js",
   },
   "standard": {
     "ignore": [
@@ -73,10 +72,15 @@
     "echint": "^1.5.0",
     "glob": "^6.0.1",
     "istanbul": "^0.4.0",
+    "json-loader": "^0.5.4",
     "mocha": "^2.3.4",
+    "path": "^0.12.7",
     "require-directory": "^2.1.1",
     "should": "^7.1.1",
-    "standard": "^5.4.1"
+    "standard": "^5.4.1",
+    "unminified-webpack-plugin": "^1.1.1",
+    "webpack": "^1.13.1",
+    "webpack-replace": "^1.0.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",
@@ -87,9 +91,6 @@
     "fs-readfile-promise": "^2.0.1",
     "fs-writefile-promise": "^1.0.3",
     "har-validator": "^2.0.2",
-    "json-loader": "^0.5.4",
-    "pinkie-promise": "^2.0.0",
-    "webpack": "^1.13.1",
-    "webpack-replace": "^1.0.0"
+    "pinkie-promise": "^2.0.0"
   }
 }
